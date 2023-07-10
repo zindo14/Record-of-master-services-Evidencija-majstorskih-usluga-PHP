@@ -1,0 +1,12 @@
+USE `uslugefinal`;
+DROP procedure IF EXISTS `DodajEvidencijuUsluge`;
+DELIMITER $$
+USE `uslugefinal`$$
+CREATE PROCEDURE `DodajEvidencijuUsluge` (IN IDEvidencijeParametar int(10), IN ImePrezimeKlijentaParametar varchar(30), IN VrstaPoslaParametar varchar(50), IN DatumEvidencijeParametar date, IN DatumPocetkaRealizacijeParametar date,DatumZavrsetkaPoslaParametar date,MestoParametar int(11), CenaParametar int(10))
+BEGIN
+INSERT INTO `evidencijausluge` (`IDEvidencije`, `ImePrezimeKlijenta`, `VrstaPosla`, `DatumEvidencije`, `DatumPocetkaRealizacije`,`DatumZavrsetkaPosla`,`Mesto`,`Cena`) VALUES (IDEvidencijeParametar, ImePrezimeKlijentaParametar, VrstaPoslaParametar, DatumEvidencijeParametar, DatumPocetkaRealizacijeParametar, DatumZavrsetkaPoslaParametar, MestoParametar,CenaParametar);
+END
+$$
+DELIMITER ;
+
+CREATE ALGORITHM = UNDEFINED DEFINER =`root`@`localhost` SQL SECURITY DEFINER VIEW `svipodacioevidencijama` AS SELECT `evidencijausluge`.`ImePrezimeKlijenta`, `evidencijausluge`.`VrstaPosla`,`mesto`.`NazivMesta`,`evidencijausluge`.`Cena` FROM (`evidencijausluge` inner join `mesto` on(`evidencijausluge`.`Mesto` = `mesto`.`PTT`));
